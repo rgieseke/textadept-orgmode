@@ -1,0 +1,371 @@
+* Name
+
+Textadept Org module
+abbreviation: taom
+
+
+* Description
+
+'Textadept Org module' is for Textadept, what 'Org mode' is for Emacs.
+"[It] is for keeping notes, maintaining TODO lists, doing project
+planning, and authoring with a fast and effective plain-text system."
+http://orgmode.org/ (december 05 2012)
+
+
+* Planning
+
+As a reference for implementing features "The compact Org-mode Guide"
+is used.
+With the differences in the base text editor (Textadept in contrast to
+Emacs) there are at least differences in the key bindings used in 'Org
+module'. 'Org module' uses the UI and text editing features of
+Textadept and therewith re-implements the features of 'Org mode'
+instead of cloning them.
+The features are primarily implemented as they are needed by the
+author of this software.
+
+
+* Reference
+
+From: "The compact Org-mode Guide", Release 7.8.11, available for Org-mode version 7.9.2 on november 28 2012
+
+
+** Notes
+
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Chapter | Title                         | Notes                                                                                                                                                |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      01 | *Introduction*                |                                                                                                                                                      |
+|    01.1 | Preface                       |                                                                                                                                                      |
+|    01.2 | Installation                  |                                                                                                                                                      |
+|    01.3 | Activation                    |                                                                                                                                                      |
+|    01.4 | Feedback                      |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      02 | *Document Structure*          |                                                                                                                                                      |
+|    02.1 | Outlines                      | document structure, folding (hiding); org-cycle, TAB                                                                                                 |
+|    02.2 | Headlines                     | outline tree, level; "^%*+" or "^ +%*"                                                                                                               |
+|    02.3 | Visibility cycling            |                                                                                                                                                      |
+|    02.4 | Motion                        |                                                                                                                                                      |
+|    02.5 | Structure editing             |                                                                                                                                                      |
+|    02.6 | Sparse trees                  |                                                                                                                                                      |
+|    02.7 | Plain lists                   | indentation, checkboxes                                                                                                                              |
+|         |                               | Unordered list items start with ‘-’, ‘+’, or ‘*’ as bullets; Ordered list items start with ‘1.’ or ‘1)’;                                             |
+|         |                               | Description list use ‘ :: ’ to separate the term from the description.                                                                               |
+|    02.8 | Footnotes                     | marker; "^[marker] text"                                                                                                                             |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      03 | *Tables*                      | table editor, spreadsheet-like calculations; "^%s*<vert. bar>", " <vert. bar>" as table separator, indentation is set by the first line,             |
+|         |                               | " <vert. bar>-" as a horizontal separator                                                                                                            |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      04 | *Hyperlinks*                  |                                                                                                                                                      |
+|    04.1 | Hyperlinks                    | external links, recognize plain URL-like links, change the display, when the link is complete;                                                       |
+|         |                               | [ [link][description]] or alternatively [ [link]] (without space)                                                                                    |
+|    04.2 | Internal links                | ‘[ [#my-custom-id]]’ which will link to the entry with the CUSTOM_ID property ‘my-custom-id’.                                                        |
+|         |                               | Links such as '[ [My Target]]’ or ‘[ [My Target][Find my target]]’ lead to a text search in the current file for the corresponding target            |
+|         |                               | which looks like‘ <<My Target>>’.                                                                                                                    |
+|    04.3 | External links                | URL-like locators                                                                                                                                    |
+|    04.4 | Handling links                |                                                                                                                                                      |
+|    04.5 | Targeted links                | line number or a search option after a double colon; e. g. [ [file:~/code/main.c::255]] Find line 255                                                |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      05 | *TODO Items*                  |                                                                                                                                                      |
+|    05.1 | Using TODO states             | ^%*+ TODO                                                                                                                                            |
+|    05.2 | Multi-state workflows         | keywords, cycle through states, sequential states                                                                                                    |
+|    05.3 | Progress logging              | record a timestamp e. g. when closing a TODO, ‘CLOSED: [timestamp]’, 'Closing Note'                                                                  |
+|    05.4 | Priorities                    | priority cookie                                                                                                                                      |
+|    05.5 | Breaking tasks down           | outline tree below a TODO item; ‘[/]’ or ‘[%]’ as an overview                                                                                        |
+|         | into subtasks                 |                                                                                                                                                      |
+|    05.6 | Checkboxes                    | starting an item in a plain list with the string ‘[ ]’, not included into the global TODO list => split a task into a number of simple steps, toggle |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      06 | *Tags*                        | labels and contexts for cross-correlating information,  "^%s*%*+ headline title :[%a%d_@]+:$"                                                        |
+|    06.1 | Tag inheritance               | through the hierarchical structure                                                                                                                   |
+|    06.2 | Setting tags                  | automatic alignment for the edited heading, (align all tags), fast tag selection                                                                     |
+|    06.3 | Tag searches                  |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      07 | *Properties*                  | key-value pairs associates with an entry, special drawer with the name PROPERTIES, inherited; :key: value                                            |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      08 | *Dates and Times*             | label TODO items, timestamp                                                                                                                          |
+|    08.1 | Timestamps                    | date, time, range of times; either ‘<yyyy-mm-dd wday>’ or ‘<yyyy-mm-dd wday HH:MM>’ or ‘<yyyy-mm-dd wday HH:MM-HH:MM>’                               |
+|         |                               | Plain timestamp; Event; Appointment, Timestamp with repeater interval: "+%d[dwmy]", (Diary-style sexp entries), Time/Date range: "<...>--<...>",     |
+|         |                               | Inactive timestamp: [...]                                                                                                                            |
+|    08.2 | Creating timestamps           | Inteligently interpret a string, deriving defaults from the current time, pop-up calendar.                                                           |
+|    08.3 | Deadlines and scheduling      | preceding timestamps with special keywords: DEADLINE (alsa displayed in the agenda as a warning about the approaching or missed deadline),           |
+|         |                               | SCHEDULED (also as a warning when missed)                                                                                                            |
+|    08.4 | Clocking work time            |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      09 | *Capture - Refile - Archive*  | capture new ideas and tasks, and to associate reference material with them, stores files related to a task( attachments) in a special directory      |
+|    09.1 | Capture                       | templates, targets                                                                                                                                   |
+|    09.2 | Refiling notes                | refile/move some of the entries into a different list                                                                                                |
+|    09.3 | Archiving                     | move a finished (sub)tree to another file i. a. to stop it from contributing to the agenda                                                           |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      10 | *Agenda Views*                | overview of open action items or events, read-only agenda buffer, visit the corresponding locations in the original Org files,                       |
+|         |                               | change the dates of deadlines and appointments from the agenda buffer.                                                                               |
+|    10.1 | Agenda files                  |                                                                                                                                                      |
+|    10.2 | The agenda dispatcher         |                                                                                                                                                      |
+|    10.3 | The built-in agenda views     |                                                                                                                                                      |
+|  10.3.1 | The weekly/daily agenda       | sexp entries                                                                                                                                         |
+|  10.3.2 | The global TODO list          | contains all unfinished TODO items, change the state of a TODO entry with a single key press in the agenda buffer                                    |
+|  10.3.3 | Matching tags and properties  |                                                                                                                                                      |
+|  10.3.4 | Timeline for a single file    |                                                                                                                                                      |
+|  10.3.5 | Search view                   |                                                                                                                                                      |
+|    10.4 | Commands in the agenda buffer |                                                                                                                                                      |
+|    10.5 | Custom agenda views           |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      11 | *Markup for rich export*      | export targets like HTML, LATEX or DocBook                                                                                                           |
+|    11.1 | Structural markup elements    | only the first three outline levels will be used as headings. Deeper levels will become itemized lists.                                              |
+|         |                               | The table of contents is normally inserted directly before the first headline of the file.                                                           |
+|         |                               | Paragraphs, line breaks, and quoting; #+BEGIN_VERSE/#+END_VERSE, #+BEGIN_QUOTE/#+END_QUOTE, #+BEGIN_CENTER/#+END_CENTER                              |
+|         |                               | *bold*, /italic/, _underlined_, =code= and ~verbatim~ (Text in the code and verbatim  string is not processed),  +strike-through+,                   |
+|         |                               | horizontal line: "%s*-----[-]*"                                                                                                                      |
+|         |                               | comment line: "^#", indented comment line: "^#+", subtrees beginning with COMMENT, regions enclosed by #+BEGIN_COMMENT/#+END_COMMENT                 |
+|    11.2 | Images and Tables             | table header before the first horizontal line, reference: \ref{tab:basic-data}, #+CAPTION:, #+LABEL: tbl:basic-data                                  |
+|         |                               | #+CAPTION:, #+LABEL:, [ [./img/a.jpg]]                                                                                                               |
+|    11.3 | Literal examples              | #+BEGIN_EXAMPLE/#+END_EXAMPLE or "%s*: " will not be subjected to markup, typeset in monospace                                                       |
+|         |                               | #+BEGIN_SRC/#+END_SRC                                                                                                                                |
+|    11.4 | Include files                 | include the content of another file; #+INCLUDE:                                                                                                      |
+|    11.5 | Embedded LATEX                |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      12 | *Exporting*                   | export to ASCII, HTML, LATEX/PDF, DocBook, iCalendar                                                                                                 |
+|    12.1 | Export options                |                                                                                                                                                      |
+|    12.2 | The export dispatcher         |                                                                                                                                                      |
+|    12.3 | ASCII/Latin-1/UTF-8 export    |                                                                                                                                                      |
+|    12.4 | HTML export                   | #+BEGIN_HTML/#+END_HTML or #+HTML: Literal HTML code for export                                                                                      |
+|    12.5 | LATEX and PDF export          | #+LaTeX: and #+BEGIN_LaTeX ... #+END_LaTeX construct to add verbatim LATEX code.                                                                     |
+|    12.6 | DocBook export                | #+DocBook: and #+BEGIN_DocBook ... #+END_DocBook construct to add verbatim LATEX code.                                                               |
+|    12.7 | iCalendar export              |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      13 | *Publishing*                  | publishing management system, automatic HTML conversion, interlinked org files,                                                                      |
+|         |                               | automatically upload your exported HTML pages and related attachments to a web server                                                                |
+|         |                               | only publishes changed files by default.                                                                                                             |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      14 | *Working with source code*    |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      15 | *Miscellaneous*               |                                                                                                                                                      |
+|---------+-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
+
+** Keys
+
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Chapter | Keys            | Description                                                                                                                                       |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    02.3 | TAB             | Subtree cycling: Rotate current subtree among the states (-> FOLDED -> CHILDREN -> SUBTREE --).                                                   |
+|         | S-TAB           | Global cycling: Rotate the entire buffer among the states (-> OVERVIEW -> CONTENTS -> SHOW ALL --).                                               |
+|    02.4 | C-c C-n         | Next heading.                                                                                                                                     |
+|         | C-c C-p         | Previous heading.                                                                                                                                 |
+|         | C-c C-f         | Next heading same level.                                                                                                                          |
+|         | C-c C-b         | Previous heading same level.                                                                                                                      |
+|         | C-c C-u         | Backward to higher level heading.                                                                                                                 |
+|    02.5 | M-RET           | Insert new heading / list item with same level as current.                                                                                        |
+|         | M-S-RET         | Insert new TODO entry with same level as current heading.                                                                                         |
+|         | TAB             | In a new entry with no text yet, TAB will cycle through reasonable levels.                                                                        |
+|         | M-LEFT/RIGHT    | Promote/demote current heading by one level.                                                                                                      |
+|         | M-S-LEFT/RIGHT  | Promote/demote the current subtree by one level.                                                                                                  |
+|         | M-S-UP/DOWN     | Move subtree up/down (swap with previous/next subtree of same level).                                                                             |
+|         | C-x n s/w       | Narrow buffer to current subtree / widen it again.                                                                                                |
+|    02.6 | C-c /           | This prompts for an extra key to select a sparse-tree creating command.                                                                           |
+|         | C-c / r         | Occur. Prompts for a regexp and shows a sparse tree with all matches. Each match is also highlighted.                                             |
+|         | C-c C-c         | Let the highlights disappear.                                                                                                                     |
+|    02.7 | TAB             | Items can be folded just like headline levels.                                                                                                    |
+|         | M-S-UP/DOWN     | Move the item including subitems up/down (swap with previous/next item of same indentation). If the list is ordered, renumbering is automatic.    |
+|         | M-LEFT/M-RIGHT  | Decrease/increase the indentation of an item, leaving children alone.                                                                             |
+|         | M-S-LEFT/RIGHT  | Decrease/increase the indentation of the item, including subitems.                                                                                |
+|         | C-c C-c         | If there is a checkbox (see Section 5.6 [Checkboxes]) in the item line, toggle the state of the checkbox.                                         |
+|         | C-c -           | Cycle the entire list level through the diff erent itemize/enumerate bullets (‘-’,‘+’, ‘*’, ‘1.’, ‘1)’).                                          |
+|    02.8 | C-c C-x f       | The footnote action command. When the cursor is on a footnote reference / defintion, jump to the definition / (first) reference.                  |
+|         |                 | Otherwise, create a new footnote.                                                                                                                 |
+|         | C-c C-c         | Jump between definition and reference.                                                                                                            |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|      03 | C-c <vert. bar> | Convert the active region to table.                                                                                                               |
+|         | C-c C-c         | Re-align the table without moving the cursor.                                                                                                     |
+|         | TAB             | Re-align the table, move to the next field. Creates a new row if necessary.                                                                       |
+|         | S-TAB           | Re-align, move to previous field.                                                                                                                 |
+|         | RET             | Re-align the table and move down to next row. Creates a new row if necessary.                                                                     |
+|         | M-LEFT/RIGHT    | Move the current column left/right.                                                                                                               |
+|         | M-S-LEFT        | Kill the current column.                                                                                                                          |
+|         | M-S-RIGHT       | Insert a new column to the left of the cursor position.                                                                                           |
+|         | M-UP/DOWN       | Move the current row up/down.                                                                                                                     |
+|         | M-S-UP          | Kill the current row or horizontal line.                                                                                                          |
+|         | M-S-DOWN        | Insert a new row above the current row. With a prefix argument, the line is created below the current one.                                        |
+|         | C-c -           | Insert a horizontal line below current row. With a prefix argument, the line is created above the current line.                                   |
+|         | C-c RET         | Insert a horizontal line below current row, and move the cursor into the row below that line.                                                     |
+|         | C-c ^           | Sort the table lines in the region.                                                                                                               |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    04.4 | C-c l           | Store a link to the current location.                                                                                                             |
+|         | C-c C-l         | Insert a link. With the cursor on an existing link, edit the link.                                                                                |
+|         | C-c C-o         | Open link at point.                                                                                                                               |
+|         | C-c &           | Jump back to a recorded position.                                                                                                                 |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    05.1 | C-c C-t         | Rotate the TODO state of the current item among (-> (unmarked) -> TODO -> DONE --).                                                               |
+|         | S-RIGHT/LEFT    | Select the following/preceding TODO state, similar to cycling.                                                                                    |
+|         | C-c / t         | View TODO items in a sparse tree (see Section 2.6 [Sparse trees]).                                                                                |
+|         | S-M-RET         | Insert a new TODO entry below the current one.                                                                                                    |
+|    05.4 | C-c ,           | Set the priority of the current headline. Press ‘A’, ‘B’ or ‘C’ to select a priority, or SPC to remove the cookie.                                |
+|         | S-UP/DOWN       | Increase/decrease the priority of the current headline.                                                                                           |
+|    05.6 | C-c C-c         | Toggle checkbox status or (with prefix arg) checkbox presence at point.                                                                           |
+|         | M-S-RET         | Insert a new item with a checkbox.                                                                                                                |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    06.2 | C-c C-q         | Enter new tags for the current headline.                                                                                                          |
+|         | C-c C-c         | When the cursor is in a headline, this does the same as C-c C-q.                                                                                  |
+|    06.3 | C-c \           | Create a sparse tree with all headlines matching a tags search. With a C-u prefix argument, ignore headlines that are not a TODO line.            |
+|         | C-c / m         |                                                                                                                                                   |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|      07 | C-c C-x p       | Set a property. This prompts for a property name and a value.                                                                                     |
+|         | C-c C-c d       | Remove a property from the current entry.                                                                                                         |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    08.2 | C-c .           | Prompt for a date and insert/modify (on an existing timestamp) a corresponding timestamp.                                                         |
+|         | C-c !           | Like C-c ., but insert an inactive timestamp.                                                                                                     |
+|         | S-LEFT/RIGHT    | Change date at cursor by one day.                                                                                                                 |
+|         | S-UP/DOWN       | Change the item under the cursor in a timestamp. Modifying the first time in a time range will also shift the second.                             |
+|    08.3 | C-c C-d         | Insert ‘DEADLINE’ keyword along with a stamp, in the line following the headline.                                                                 |
+|         | C-c C-s         | Insert ‘SCHEDULED’ keyword along with a stamp, in the line following the head-line.                                                               |
+|    08.4 | C-c C-x C-i     | Start the clock on the current item (clock-in). When called with a C-u prefix argument, select the task from a list of recently clocked tasks.    |
+|         | C-c C-x C-o     | Stop the clock (clock-out) and compute the resulting time and insert it after the time range as ‘=> HH:MM’.                                       |
+|         | C-c C-x C-e     | Update the effort estimate for the current clock task.                                                                                            |
+|         | C-c C-x C-x     | Cancel the current clock. This is useful if a clock was started by mistake, or if you ended up working on something else.                         |
+|         | C-c C-x C-j     | Jump to the entry that contains the currently running clock. With a C-u prefix arg, select the target task from a list of recently clocked tasks. |
+|         | C-c C-x C-r     | Insert a dynamic block containing a clock report as an Org-mode table into the current file.                                                      |
+|         |                 | When the cursor is at an existing clock table, just update it.                                                                                    |
+|         | C-c C-c         | Update dynamic block at point. The cursor needs to be in the #+BEGIN line of the dynamic block.                                                   |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    09.1 | C-c c           | Start a capture process. You will be placed into a narrowed indirect buffer to edit the item.                                                     |
+|         | C-c C-c         | Once you are done entering information into the capture buffer, C-c C-c will return you to the window configuration before the capture process.   |
+|         | C-c C-w         | Finalize by moving the entry to a refile location (see Section 9.2 [Refiling notes]).                                                             |
+|         | C-c C-k         | Abort the capture process and return to the previous state.                                                                                       |
+|         | M-x org-capture | Org will prompt for a key to select a template.                                                                                                   |
+|    09.2 | C-c C-w         | Refile the entry or region at point to a different location.                                                                                      |
+|         | C-u C-c C-w     | Use the refile interface to jump to a heading.                                                                                                    |
+|         | C-u C-u C-c C-w | Jump to the location where org-refile last moved a tree to.                                                                                       |
+|    09.3 | C-c C-x C-a     | Archive the current entry using the command specified in the variable org-archive-default-command.                                                |
+|         | C-c C-x C-s     | Archive the subtree starting at the cursor position to the location given by org-archive-location.                                                |
+|         | C-c $           |                                                                                                                                                   |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    10.1 | C-c [           | Add current file to the list of agenda files.                                                                                                     |
+|         | C-c ]           | Remove current file from the list of agenda files.                                                                                                |
+|         | C-,             | Cycle through agenda file list, visiting one file after the other.                                                                                |
+|  10.3.1 | C-c a a         | Compile an agenda for the current week showing the entries for each day.                                                                          |
+|  10.3.2 | C-c a t / T     | Show the global TODO list / + allowing the selection of a specific TODO keyword.                                                                  |
+|  10.3.3 | C-c a m / M     | A list of headlines / + that are also TODO items matching a TAGS (boolean logic) expression.                                                      |
+|  10.3.3 | C-c a m         | Create a global list of tag matches from all agenda files.                                                                                        |
+|         | C-c a M         | Create a global list of tag matches from all agenda files, but check only TODO items and force checking subitems.                                 |
+|  10.3.4 | C-c a L         | Show a time-sorted view of the Org file, with all time-stamped items.                                                                             |
+|  10.3.5 | C-c a s         | A list of entries selected by a boolean expression of keywords and/or regular expressions that must or must not occur in the entry.               |
+|    10.4 |                 | “remotely commands” from the agenda buffer:                                                                                                       |
+|         | n               | Next line (same as UP and C-p).                                                                                                                   |
+|         | p               | Previous line (same as DOWN and C-n).                                                                                                             |
+|         | SPC             | Display the original location of the item in another window.                                                                                      |
+|         | TAB             | Go to the original location of the item in another window.                                                                                        |
+|         | RET             | Go to the original location of the item and delete other windows.                                                                                 |
+|         | o               | Delete other windows.                                                                                                                             |
+|         | d / w           | Switch to day/week view.                                                                                                                          |
+|         | f / b           | Go forward/backward in time to display the following org-agenda-current-span days.                                                                |
+|         | .               | Go to today.                                                                                                                                      |
+|         | j               | Prompt for a date and go there.                                                                                                                   |
+|         | v l             | Toggle Logbook mode. In Logbook mode, entries that were marked DONE while logging was on (variable org-log-done) are shown in the agenda,         |
+|         | l               | as are entries that have been clocked on that day.                                                                                                |
+|         | r               | Recreate the agenda buffer, to reflect the changes.                                                                                               |
+|         | g               |                                                                                                                                                   |
+|         | s               | Save all Org buff ers in the current Emacs session, and also the locations of IDs.                                                                |
+|         | /               | Filter the current agenda view with respect to a tag.                                                                                             |
+|         | \               | Narrow the current agenda filter by an additional condition.                                                                                      |
+|         | 0-9             | Digit argument.                                                                                                                                   |
+|         | t               | Change the TODO state of the item, in the agenda and in the org file.                                                                             |
+|         | C-k             | Delete the current agenda item along with the entire subtree belonging to it in the original Org file.                                            |
+|         | C-c C-w         | Refile the entry at point.                                                                                                                        |
+|         | C-c C-x C-a     | Archive the subtree corresponding to the entry at point using the default archiving command set in org-archive-default-command.                   |
+|         | a               |                                                                                                                                                   |
+|         | C-c C-x C-s     | Archive the subtree corresponding to the current headline.                                                                                        |
+|         | $               |                                                                                                                                                   |
+|         | C-c C-s         | Schedule this item, with prefix arg remove the scheduling timestamp.                                                                              |
+|         | C-c C-d         | Set a deadline for this item, with prefix arg remove the deadline.                                                                                |
+|         | S-RIGHT/LEFT    | Change the timestamp associated with the current line by one day.                                                                                 |
+|         | I               | Start the clock on the current item.                                                                                                              |
+|         | O / X           | Stop/cancel the previously started clock.                                                                                                         |
+|         | J               | Jump to the running clock in another window.                                                                                                      |
+|    10.5 | C-c a C         | Customize the variable org-agenda-custom-commands.                                                                                                |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    11.1 | C-c ;           | Toggle the COMMENT keyword at the beginning of an entry.                                                                                          |
+|    11.3 | C-c ’           | Edit the source from #+BEGIN_SRC/#+END_SRC in a special buffer.                                                                                   |
+|    11.4 | C-c ’           | Visit an include file.                                                                                                                            |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+|    12.1 | C-c C-e t       | Insert template with all export options.                                                                                                          |
+|    12.2 | C-c C-e         | Dispatcher for export and publishing commands (exporting the file or an active region with one outline tree).                                     |
+|    12.3 | C-c C-e a       | Export as ASCII file.                                                                                                                             |
+|         | C-c C-e n       | Like the above commands, but use Latin-1 encoding.                                                                                                |
+|         | C-c C-e N       |                                                                                                                                                   |
+|         | C-c C-e u       | Like the above commands, but use UTF-8 encoding.                                                                                                  |
+|         | C-c C-e U       |                                                                                                                                                   |
+|    12.4 | C-c C-e h       | Export as HTML file ‘myfile.html’.                                                                                                                |
+|         | C-c C-e b       | Export as HTML file and immediately open it with a browser.                                                                                       |
+|    12.5 | C-c C-e l       | Export as LATEX file ‘myfile.tex’.                                                                                                                |
+|         | C-c C-e p       | Export as LATEX and then process to PDF.                                                                                                          |
+|         | C-c C-e d       | Export as LATEX and then process to PDF, then open the resulting PDF file.                                                                        |
+|    12.6 | C-c C-e D       | Export as DocBook file.                                                                                                                           |
+|    12.7 | C-c C-e i       | Create iCalendar entries for the current file in a‘ .ics’ file.                                                                                   |
+|         | C-c C-e c       | Create a single large iCalendar file from all files in org-agenda-files and write it to the file given by org-combined-agenda-icalendar-file.     |
+|      13 | C-c C-e C       | Prompt for a specific project and publish all files that belong to it.                                                                            |
+|         | C-c C-e P       | Publish the project containing the current file.                                                                                                  |
+|         | C-c C-e F       | Publish only the current file.                                                                                                                    |
+|         | C-c C-e E       | Publish every project.                                                                                                                            |
+|      14 | C-c ’           | Editing source code.                                                                                                                              |
+|         | C-c C-c         | Evaluating code blocks.                                                                                                                           |
+|         | C-c C-v t       | Extracting source code and to create pure source code files.                                                                                      |
+|         | C-c C-v l       | Load the code blocks from an Org-mode files into the “Library of Babel”.                                                                          |
+|      15 | M-TAB           | In-buffer completion.                                                                                                                             |
+|---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
+** Configuration variables
+
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+| Chapter | Variable name                      | Description                                                                                   |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    02.3 | org-startup-folded                 | Configuration variable for the start value (FOLDED -> CHILDREN -> SUBTREE)                    |
+|         | #+STARTUP:                         | overview, content, showall                                                                    |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    05.1 | org-todo-state-tags-triggers       |                                                                                               |
+|    05.2 | org-todo-keywords                  | TODO keywords to indicate different sequential states in the process of working on an item    |
+|         | #+TODO:                            |                                                                                               |
+|    05.3 | org-log-done = time                | Log when a TODO item is finished.                                                             |
+|         | #+STARTUP: logdone                 |                                                                                               |
+|         | org-log-done = note                | Record a note along with the timestamp.                                                       |
+|         | #+STARTUP: lognotedone             |                                                                                               |
+|         | org-log-into-drawer                | Tracking TODO state changes.                                                                  |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    06.1 | #+FILETAGS                         | Set tags for a hypothetical level 0 heading.                                                  |
+|    06.2 | org-tags-column                    |                                                                                               |
+|         | org-tag-alist                      | A hard (coded) list of tags                                                                   |
+|         | #+TAGS:                            |                                                                                               |
+|    06.3 | org-tags-match-list-sublevels      |                                                                                               |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|      07 | org-global-properties              |                                                                                               |
+|         | #+PROPERTY:                        |                                                                                               |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    08.3 | org-deadline-warning-days          |                                                                                               |
+|         | org-agenda-skip-scheduled-if-done  |                                                                                               |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    09.1 | org-default-notes-file             | Set a default target file for notes.                                                          |
+|         | org-directory                      |                                                                                               |
+|         | org-capture                        | Define a global key for capturing.                                                            |
+|         | org-capture-templates              |                                                                                               |
+|    09.2 | org-refile-targets                 |                                                                                               |
+|    09.3 | org-archive-location               |                                                                                               |
+|         | #+ARCHIVE:                         |                                                                                               |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|  10.3.1 | org-agenda-to-appt                 | To add all the appointments of your agenda files.                                             |
+|  10.3.5 | org-agenda-text-search-extra-files |                                                                                               |
+|    10.5 | org-agenda-custom-commands         |                                                                                               |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    11.1 | #+TITLE:                           | Document title                                                                                |
+|         | org-export-headline-levels         |                                                                                               |
+|         | #+OPTIONS: H:4                     |                                                                                               |
+|         | #+OPTIONS: toc:2                   | Only two levels in TOC                                                                        |
+|         | #+OPTIONS: toc:nil                 | No TOC at all                                                                                 |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+|    12.5 | #+LaTeX_CLASS:                     | Set another LATEX class then 'article'. The class must be listed in org-export-latex-classes. |
+|    12.7 | org-agenda-files                   |                                                                                               |
+|         | org-combined-agenda-icalendar-file |                                                                                               |
+|      15 | org-indent-mode                    |                                                                                               |
+|         | #+STARTUP: indent                  |                                                                                               |
+|---------+------------------------------------+-----------------------------------------------------------------------------------------------|
+
+file specific configuration with "^#+.*" anywhere in the file
